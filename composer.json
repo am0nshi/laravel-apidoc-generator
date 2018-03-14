@@ -2,6 +2,7 @@
     "name": "am0nshi/laravel-apidoc-generator",
     "license": "MIT",
     "description": "Generate beautiful API documentation from your Laravel application",
+    "minimum-stability": "dev",
     "keywords": [
         "API",
         "Documentation",
