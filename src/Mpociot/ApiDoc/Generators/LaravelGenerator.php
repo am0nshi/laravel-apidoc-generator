@@ -43,7 +43,7 @@ class LaravelGenerator extends AbstractGenerator
     }
 
     /**
-     * @param  \Illuminate\Routing\Route $route
+     * @param \Illuminate\Routing\Route $route
      * @param array $bindings
      * @param array $headers
      * @param bool $withResponse
@@ -92,6 +92,7 @@ class LaravelGenerator extends AbstractGenerator
             'description' => $routeDescription['long'],
             'methods' => $this->getMethods($route),
             'uri' => $this->getUri($route),
+            'route' => $route->getName(),
             'parameters' => [],
             'response' => $content,
             'showresponse' => $showresponse,
