@@ -27,6 +27,7 @@ class GenerateDocumentation extends Command
                             {--middleware= : The middleware to use for generation}
                             {--noResponseCalls : Disable API response calls}
                             {--noPostmanCollection : Disable Postman collection creation}
+                            {--swaggerPath : Path to store swagger file}
                             {--useMiddlewares : Use all configured route middlewares}
                             {--authProvider=users : The authentication provider to use for API response calls}
                             {--authGuard=web : The authentication guard to use for API response calls}
@@ -188,6 +189,12 @@ class GenerateDocumentation extends Command
 
         $this->info('Wrote HTML documentation to: '.$outputPath.'/public/index.html');
 
+        if ($this->option('swaggerPath')) {
+            $this->info('Generating Swagger collection');
+
+            file_put_contents($outputPath.DIRECTORY_SEPARATOR.'collection.json', $this->generatePostmanCollection($parsedRoutes));
+        }
+
         if ($this->option('noPostmanCollection') !== true) {
             $this->info('Generating Postman collection');
 
@@ -342,6 +349,20 @@ class GenerateDocumentation extends Command
     private function generatePostmanCollection(Collection $routes)
     {
         $writer = new CollectionWriter($routes);
+
+        return $writer->getCollection();
+    }
+
+    /**
+     * Generate Postman collection JSON file.
+     *
+     * @param Collection $routes
+     *
+     * @return string
+     */
+    private function generateSwaggerCollection(Collection $routes)
+    {
+        $writer = new \Mpociot\ApiDoc\Swagger\CollectionWriter($routes);
 
         return $writer->getCollection();
     }
